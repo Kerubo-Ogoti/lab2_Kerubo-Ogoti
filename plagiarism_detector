@@ -1,0 +1,170 @@
+#!/usr/bin/env python3
+
+# PLAGIARISM DETECTOR
+
+
+import string
+
+
+# FUNCTION TO READ FILES
+
+def read_file(filename):
+    """
+    Reads and returns file content.
+    Handles file errors.
+    """
+
+    try:
+        with open("Documents/essay-1.txt", "r") as file1:
+            return file1.read().lower()
+        with open("Documents/essay-2.txt", "r") as file2:
+            return file2.read().lower()
+
+    except FileNotFoundError:
+        print(f"Error: {filename} not found.")
+        return ""
+
+    except Exception as error:
+        print("An error occurred:", error)
+        return ""
+
+
+
+# FUNCTION TO CLEAN TEXT
+
+def clean_text(text):
+    """
+    Removes punctuation and splits text into words.
+    """
+
+    for punctuation in string.punctuation:
+        text = text.replace(punctuation, "")
+
+    words = text.split()
+
+    return words
+
+
+
+# FUNCTION TO COUNT WORD FREQUENCY
+
+def count_words(words):
+    """
+    Counts how many times each word appears.
+    """
+
+    frequency = {}
+
+    for word in words:
+
+        if word in frequency:
+            frequency[word] += 1
+
+        else:
+            frequency[word] = 1
+
+    return frequency
+
+
+
+# FUNCTION TO SEARCH FOR A WORD
+
+def search_word(word, essay1, essay2):
+    """
+    Returns True if word is found in BOTH essays.
+    Otherwise returns False.
+    """
+
+    return word in essay1 and word in essay2
+
+
+
+# LOAD ESSAYS
+
+essay1_text = read_file("essay1.txt")
+essay2_text = read_file("essay2.txt")
+
+# Validation
+if essay1_text == "" or essay2_text == "":
+    print("One or both essay files are empty or missing.")
+    exit()
+
+# PROCESS TEXT
+
+essay1_words = clean_text(essay1_text)
+essay2_words = clean_text(essay2_text)
+
+#WORD FREQUENCY
+
+essay1_frequency = count_words(essay1_words)
+essay2_frequency = count_words(essay2_words)
+
+# FIND COMMON WORDS
+
+common_words = set(essay1_words).intersection(set(essay2_words))
+
+print("\nCOMMON WORDS")
+print(common_words)
+for word in common_words:
+
+    print(
+        f"{word} -> "
+        f"Essay1: {essay1_frequency[word]} times | "
+        f"Essay2: {essay2_frequency[word]} times")
+
+# SEARCH FOR SPECIFIC WORD
+
+search = input("\nEnter a word to search: ").lower().strip()
+
+# Input check
+if search == "":
+    print("Invalid input.")
+
+else:
+
+    found = search_word(search, essay1_words, essay2_words)
+
+    if found:
+
+        print(f"\n'{search}' was found in both essays.")
+
+        print(f"Essay1 Count: {essay1_frequency.get(search, 0)}")
+
+        print(f"Essay2 Count: {essay2_frequency.get(search, 0)}")
+
+    else:
+        print("\nFalse")
+
+
+# CALCULATE PLAGIARISM
+ 
+set1 = set(essay1_words)
+set2 = set(essay2_words)
+
+intersection = set1.intersection(set2)
+union = set1.union(set2)
+
+plagiarism_percentage = (len(intersection) / len(union)) * 100
+
+
+
+# DISPLAY RESULTS
+
+print("\nPLAGIARISM ANALYSIS")
+plagiarism_analysis = "No plagiarism detected"
+print(plagiarism_analysis)
+
+print("Common Unique Words:", len(intersection))
+print("Total Unique Words:", len(union))
+
+print("Plagiarism Percentage:", round(plagiarism_percentage, 2), "%")
+
+# Determining plagiarism
+
+if plagiarism_percentage >= 50:
+    print("Decision: Plagiarism detected.")
+
+else:
+    print("Decision: No plagiarism detected.")
+
+
