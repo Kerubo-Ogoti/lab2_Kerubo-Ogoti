@@ -6,7 +6,7 @@
 import string
 
 
-# FUNCTION TO READ FILES
+# a function that will read the file
 
 def read_file(filename):
     """
@@ -30,7 +30,7 @@ def read_file(filename):
 
 
 
-# FUNCTION TO CLEAN TEXT
+# a function that will remove punctuation
 
 def clean_text(text):
     """
@@ -46,7 +46,7 @@ def clean_text(text):
 
 
 
-# FUNCTION TO COUNT WORD FREQUENCY
+# a function that will count the number of times a word appears
 
 def count_words(words):
     """
@@ -67,7 +67,7 @@ def count_words(words):
 
 
 
-# FUNCTION TO SEARCH FOR A WORD
+# a function that will search for a word
 
 def search_word(word, essay1, essay2):
     """
@@ -81,8 +81,8 @@ def search_word(word, essay1, essay2):
 
 # LOAD ESSAYS
 
-essay1_text = read_file("essay1.txt")
-essay2_text = read_file("essay2.txt")
+essay1_text = read_file("essay-1.txt")
+essay2_text = read_file("essay-2.txt")
 
 # Validation
 if essay1_text == "" or essay2_text == "":
