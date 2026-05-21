@@ -15,9 +15,9 @@ def read_file(filename):
     """
 
     try:
-        with open("Documents/essay-1.txt", "r") as file1:
+        with open("/home/kerubo/lab2_Kerubo-Ogoti/essay-1.txt", "r") as file1:
             return file1.read().lower()
-        with open("Documents/essay-2.txt", "r") as file2:
+        with open("/home/kerubo/lab2_Kerubo-Ogoti/essay-2.txt", "r") as file2:
             return file2.read().lower()
 
     except FileNotFoundError:
