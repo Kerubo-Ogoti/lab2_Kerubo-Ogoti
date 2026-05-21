@@ -68,14 +68,17 @@ def count_words(words):
 
 
 # a function that will search for a word
-
 def search_word(word, essay1, essay2):
     """
-    Returns True if word is found in BOTH essays.
+    Returns (count1, count2) if word is found in at least one essay.
     Otherwise returns False.
     """
 
-    return word in essay1 and word in essay2
+    count1 = essay1.get(word, 0)
+    count2 = essay2.get(word, 0)
+    if count1 ==0 and count2== 0: 
+        return False
+    return (count1, count2)
 
 
 
@@ -104,7 +107,6 @@ essay2_frequency = count_words(essay2_words)
 common_words = set(essay1_words).intersection(set(essay2_words))
 
 print("\nCOMMON WORDS")
-print(common_words)
 for word in common_words:
 
     print(
@@ -118,52 +120,39 @@ search = input("\nEnter a word to search: ").lower().strip()
 
 # Input check
 if search == "":
-    print("Invalid input.")
-
+  print("Invalid input try again")
 else:
-
-    found = search_word(search, essay1_words, essay2_words)
-
-    if found:
-
-        print(f"\n'{search}' was found in both essays.")
-
-        print(f"Essay1 Count: {essay1_frequency.get(search, 0)}")
-
-        print(f"Essay2 Count: {essay2_frequency.get(search, 0)}")
-
+    result = search_word(search, essay1_frequency, essay2_frequency)
+    if result:
+      count1, count2 = result
+      print(f"\n'{search}' was found.")
+      print(f"Essay1 Count: {count1}")
+      print(f"Essay2 Count: {count2}")
     else:
-        print("\nFalse")
+     print("\nFalse")
 
 
 # CALCULATE PLAGIARISM
- 
+
 set1 = set(essay1_words)
 set2 = set(essay2_words)
-
 intersection = set1.intersection(set2)
 union = set1.union(set2)
-
 plagiarism_percentage = (len(intersection) / len(union)) * 100
 
 
 
 # DISPLAY RESULTS
-
 print("\nPLAGIARISM ANALYSIS")
-plagiarism_analysis = "No plagiarism detected"
-print(plagiarism_analysis)
-
 print("Common Unique Words:", len(intersection))
 print("Total Unique Words:", len(union))
-
 print("Plagiarism Percentage:", round(plagiarism_percentage, 2), "%")
+
 
 # Determining plagiarism
 
 if plagiarism_percentage >= 50:
     print("Decision: Plagiarism detected.")
-
 else:
     print("Decision: No plagiarism detected.")
 
