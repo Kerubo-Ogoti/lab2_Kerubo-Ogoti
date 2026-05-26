@@ -15,10 +15,8 @@ def read_file(filename):
     """
 
     try:
-        with open("/home/kerubo/lab2_Kerubo-Ogoti/essay-1.txt", "r") as file1:
-            return file1.read().lower()
-        with open("/home/kerubo/lab2_Kerubo-Ogoti/essay-2.txt", "r") as file2:
-            return file2.read().lower()
+        with open(filename, "r") as file:
+            return file.read().lower()
 
     except FileNotFoundError:
         print(f"Error: {filename} not found.")
@@ -84,8 +82,8 @@ def search_word(word, essay1, essay2):
 
 # LOAD ESSAYS
 
-essay1_text = read_file("essay-1.txt")
-essay2_text = read_file("essay-2.txt")
+essay1_text = read_file("/home/kerubo/lab2_Kerubo-Ogoti/essay-1.txt")
+essay2_text = read_file("/home/kerubo/lab2_Kerubo-Ogoti/essay-2.txt")
 
 # Validation
 if essay1_text == "" or essay2_text == "":
